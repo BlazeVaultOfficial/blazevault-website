@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlazeVault Store - Free Fire Gems</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #0000ff;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        .toggle-buttons {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .toggle-buttons button {
+            padding: 10px 20px;
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .toggle-buttons button.active {
+            background-color: #009900;
+        }
+        .sections {
+            display: flex;
+            justify-content: space-between;
+        }
+        .section {
+            width: 48%;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+        .section h2 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 10px;
+            text-decoration: underline;
+        }
+        .item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .item img {
+            width: 50px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        .item h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #ff6600;
+            font-weight: bold;
+        }
+        .item p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        .item .price {
+            font-size: 16px;
+            font-weight: bold;
+            color: #009900;
+        }
+        .item.selected {
+            background-color: #e0f7fa;
+            border-color: #00796b;
+        }
+        .buy-now {
+            display: none;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff6600;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* Popup box styles */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            z-index: 1000;
+            width: 300px; /* Set a fixed width for the popup */
+        }
+        .popup-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .popup h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .popup input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .popup button {
+            padding: 10px 20px;
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        /* Overlay background */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        /* Icon in popup */
+        .popup-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 20px; /* Space between the icon and input field */
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>BLAZEVAULT STORE</h1>
+        
+        <!-- Toggle buttons for USD and LKR -->
+        <div class="toggle-buttons">
+            <button id="usdButton" onclick="toggleCurrency('USD')" class="active">USD</button>
+            <button id="lkrButton" onclick="toggleCurrency('LKR')">LKR</button>
+        </div>
+
+        <div class="sections">
+            <!-- Diamond Section -->
+            <div class="section">
+                <h2>Diamond Section</h2>
+                <div class="item" onclick="selectItem(this)">
+                    <img src="point.png" alt="Point Image">
+                    <h3><strong>Diamond × 57</strong></h3>
+                    <p>Price: <span class="price" data-lkr="100" data-usd="0.5">100 LKR</span></p>
+                </div>
+                <div class="item" onclick="selectItem(this)">
+                    <img src="point.png" alt="Point Image">
+                    <h3><strong>Diamond × 115</strong></h3>
+                    <p>Price: <span class="price" data-lkr="200" data-usd="1">200 LKR</span></p>
+                </div>
+            </div>
+            <!-- Membership Section -->
+            <div class="section">
+                <h2>Membership Section</h2>
+                <div class="item" onclick="selectItem(this)">
+                    <img src="lite.png" alt="Lite Image">
+                    <h3>Weekly Lite</h3>
+                    <p>Price: <span class="price" data-lkr="150" data-usd="0.75">150 LKR</span></p>
+                </div>
+                <div class="item" onclick="selectItem(this)">
+                    <img src="week.png" alt="Weekly Membership Image">
+                    <h3>Weekly Membership</h3>
+                    <p>Price: <span class="price" data-lkr="180" data-usd="0.9">180 LKR</span></p>
+                </div>
+            </div>
+        </div>
+        <button class="buy-now" id="buyNowButton" onclick="showPopup()">Buy Now</button>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="closePopup()"></div>
+
+    <!-- Popup box -->
+    <div class="popup" id="popup">
+        <!-- Icon in popup, positioned above the input field -->
+        <div class="popup-content">
+            <img src="icon.png" class="popup-icon" alt="Popup Icon" onclick="closePopup()">
+            <h2>Enter UID</h2>
+            <input type="text" id="uidInput" placeholder="Type UID here" maxlength="11" oninput="validateUID(event)">
+            <br>
+            <button onclick="submitUID()">Submit</button>
+        </div>
+    </div>
+
+    <script>
+        let selectedItem = null;
+        let currentCurrency = 'LKR'; // Default currency
+
+        function selectItem(element) {
+            // Remove 'selected' class from all items
+            document.querySelectorAll('.item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            // Add 'selected' class to the clicked item
+            element.classList.add('selected');
+            selectedItem = element;
+            // Show the 'Buy Now' button
+            document.getElementById('buyNowButton').style.display = 'block';
+        }
+
+        function toggleCurrency(currency) {
+            currentCurrency = currency;
+            // Update button active state
+            document.getElementById('usdButton').classList.remove('active');
+            document.getElementById('lkrButton').classList.remove('active');
+            if (currency === 'USD') {
+                document.getElementById('usdButton').classList.add('active');
+            } else {
+                document.getElementById('lkrButton').classList.add('active');
+            }
+            // Update all prices
+            document.querySelectorAll('.price').forEach(priceElement => {
+                let lkrPrice = priceElement.getAttribute('data-lkr');
+                let usdPrice = priceElement.getAttribute('data-usd');
+                priceElement.textContent = currentCurrency === 'LKR' ? `${lkrPrice} LKR` : `${usdPrice} USD`;
+            });
+        }
+
+        function showPopup() {
+            // Show the overlay and popup
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        function closePopup() {
+            // Hide the overlay and popup
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        function submitUID() {
+            let uid = document.getElementById('uidInput').value;
+            if (uid) {
+                alert("UID submitted: " + uid);
+                // Hide popup after submission
+                closePopup();
+            } else {
+                alert("Please enter a valid UID.");
+            }
+        }
+
+        function validateUID(event) {
+            let uid = event.target.value;
+            if (uid.length > 11) {
+                event.target.value = uid.slice(0, 11); // Restrict to 11 characters
+            }
+        }
+    </script>
+</body>
+</html>
